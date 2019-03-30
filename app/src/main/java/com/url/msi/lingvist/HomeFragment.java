@@ -1,6 +1,7 @@
 package com.url.msi.lingvist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,14 +32,27 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
         textView = view.findViewById(R.id.t1);
-        textView.setText("测试");
+        final Intent intent = new Intent(getActivity().getApplicationContext(),World.class);
+
+
         cpv = view.findViewById(R.id.cpv);
         cpv.setShowTick(false);
 
         cpv.setProgressColor(mShaderColors);
         cpv.showAnimation(70,1500);
+        cpv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.cpv:
+                        textView.setText("666666");
+                        startActivity(intent);
+                }
+            }
+        });
 
         return view;
     }
+
 
 }
