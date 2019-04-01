@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3883A4</color>
-    <color name="colorPrimaryDark">#3883A4</color>
-    <color name="colorAccent">#1874CD</color>
+    <color name="colorPrimary">#3883A4</color>   <!--导航栏颜色-->
+    <color name="colorPrimaryDark">#3883A4</color>   <!--通知栏颜色-->
+    <color name="colorAccent">#1874CD</color>   <!--控件选中后颜色-->
 </resources>
