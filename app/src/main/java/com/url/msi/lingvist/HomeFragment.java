@@ -17,7 +17,7 @@ public class HomeFragment extends Fragment {
 
     TextView textView;
     private CircleProgressView cpv;
-    private int[] mShaderColors = new int[]{0xFF4FEAAC,0xFFA8DD51,0xFFE8D30F,0xFFA8DD51,0xFF4FEAAC};
+    private int[] mShaderColors = new int[]{0xFF4FEAAC,0xFFA8DD51,0x00000000,0xFFA8DD51,0xFF4FEAAC};
 
 
 
