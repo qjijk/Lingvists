@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--暂时不用动-->
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/main_navigation_bar"
         android:layout_width="match_parent"

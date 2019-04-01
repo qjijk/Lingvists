@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.king.view.circleprogressview.CircleProgressView;
-
+/*看名字就知道是干什么的了*/
 
 public class HomeFragment extends Fragment {
 

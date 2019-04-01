@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.king.view.circleprogressview.CircleProgressView;
 //import com.android.support:appcompat-v7:28.0.0;
 
+/*不用管，还没用*/
+
 
 public class NotificationFragment extends Fragment {
 

@@ -2,6 +2,7 @@ package com.url.msi.lingvist;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+/*不用管，还没用*/
 
 public class World extends AppCompatActivity {
 
