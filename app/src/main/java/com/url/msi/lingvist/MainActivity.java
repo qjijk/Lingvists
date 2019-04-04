@@ -1,6 +1,7 @@
 package com.url.msi.lingvist;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
@@ -11,12 +12,15 @@ import android.support.design.widget.BottomNavigationView;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.king.view.circleprogressview.CircleProgressView;
+
+import java.util.ArrayList;
 /*不用管*/
 
 
@@ -25,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
     SQLiteDatabase db;
     AssetsDatabaseManager mg;
+    ArrayList<Word> words;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNav = findViewById(R.id.main_navigation_bar);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         // 初始化，只需要调用一次
         AssetsDatabaseManager.initManager(getApplication());
@@ -42,13 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        BottomNavigationView bottomNav = findViewById(R.id.main_navigation_bar);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout, new HomeFragment()).commit();
         }
+        setWordDemande();
+
     }
 
 
@@ -76,4 +80,23 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    //获取单词数据
+    private void setWordDemande()
+    {
+        Cursor cursor = db.rawQuery("select * from s123", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(2);//获取SQLite中的id列
+            String letter = cursor.getString(0);
+            int cp = cursor.getInt(1);
+            Word word = new Word(id, letter, cp);
+            //words.add(word);
+            Log.i("word",letter);//调试用
+            Log.i("cp", String.valueOf(cp));
+        }
+
+    }
+
+
+
 }

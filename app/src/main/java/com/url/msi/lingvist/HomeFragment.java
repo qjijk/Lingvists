@@ -2,9 +2,12 @@ package com.url.msi.lingvist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.king.view.circleprogressview.CircleProgressView;
 public class HomeFragment extends Fragment {
 
     TextView textView;
+    SQLiteDatabase db;
     private CircleProgressView cpv;
     private int[] mShaderColors = new int[]{0xFF4FEAAC,0xFFA8DD51,0x00000000,0xFFA8DD51,0xFF4FEAAC};
 
@@ -53,6 +57,9 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+
+
 
 
 }
