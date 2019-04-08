@@ -8,4 +8,33 @@
 
     <!--背单词界面-->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="\@+id/sentence
+            Our greatest glory consists not in never falling but in rising every time we fall."
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/sentenceTranslation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@+id/sentenceTranslation
+            我们最值得自豪的不在于从不跌倒，而在于每次跌倒之后都爬起来。"
+            android:layout_margin="10dp"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
