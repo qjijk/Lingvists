@@ -14,14 +14,16 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="20dp"
         android:background="@color/colorPrimary">
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
             android:elevation="5dp"
             android:background="@drawable/shape_radius">
 
@@ -49,15 +51,72 @@
 
         <TextView
             android:id="@+id/wordTranslation"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="\@+id/wordTranslation\nn.光荣，荣誉；赞颂\nvi.自豪，骄傲；狂喜"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
             android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:textSize="18sp"
             android:lineSpacingExtra="5dp"
-            android:textColor="#ffffff"/>
+            android:textColor="@color/colorBackground"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/learnedNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="70"
+                android:textColor="@color/colorBackground"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" / "
+                android:textColor="@color/colorBackground"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/colorBackground"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:text="提交"
+                android:textSize="16dp"
+                android:textColor="@color/colorBackground" />
+
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar_healthy"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:orientation="vertical"
+            android:max="100"
+            android:progress="70"
+            android:progressDrawable="@drawable/progress_bar"
+            />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
