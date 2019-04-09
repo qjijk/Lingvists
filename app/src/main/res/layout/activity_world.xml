@@ -23,26 +23,26 @@
             android:background="@drawable/shape_radius">
 
 
-        <TextView
-            android:id="@+id/sentence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="\@+id/sentence\nOur greatest 'glory' consists not in never falling but in rising every time we fall."
-            android:textSize="24sp"
-            android:lineSpacingExtra="3dp"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/sentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="\@+id/sentence\nOur greatest 'glory' consists not in never falling but in rising every time we fall."
+                android:textSize="24sp"
+                android:lineSpacingExtra="3dp"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/sentenceTranslation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="\@+id/sentenceTranslation\n我们最值得自豪的不在于从不跌倒，而在于每次跌倒之后能爬起来。"
-            android:layout_margin="10dp"
-            android:lineSpacingExtra="2dp"
-            android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/sentenceTranslation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@+id/sentenceTranslation\n我们最值得自豪的不在于从不跌倒，而在于每次跌倒之后能爬起来。"
+                android:layout_margin="10dp"
+                android:lineSpacingExtra="2dp"
+                android:textSize="16sp"/>
         </LinearLayout>
 
         <TextView
