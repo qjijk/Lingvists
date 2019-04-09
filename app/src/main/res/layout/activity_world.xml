@@ -14,16 +14,25 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="20dp">
+        android:padding="30dp"
+        android:background="@color/colorPrimary">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:background="@drawable/shape_radius">
+
 
         <TextView
             android:id="@+id/sentence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="\@+id/sentence
-            Our greatest glory consists not in never falling but in rising every time we fall."
+            android:text="\@+id/sentence\nOur greatest 'glory' consists not in never falling but in rising every time we fall."
             android:textSize="24sp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -31,10 +40,21 @@
             android:id="@+id/sentenceTranslation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\@+id/sentenceTranslation
-            我们最值得自豪的不在于从不跌倒，而在于每次跌倒之后都爬起来。"
+            android:text="\@+id/sentenceTranslation\n我们最值得自豪的不在于从不跌倒，而在于每次跌倒之后能爬起来。"
             android:layout_margin="10dp"
-            android:textSize="18sp"/>
+            android:lineSpacingExtra="2dp"
+            android:textSize="16sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/wordTranslation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@+id/wordTranslation\nn.光荣，荣誉；赞颂\nvi.自豪，骄傲；狂喜"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:lineSpacingExtra="6dp"
+            android:textColor="#ffffff"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

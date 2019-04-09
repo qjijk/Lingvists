@@ -1,5 +1,6 @@
 package com.url.msi.lingvist;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout, new HomeFragment()).commit();
         }
-        setWordDemande();
+        //setWordDemande();
 
     }
 
