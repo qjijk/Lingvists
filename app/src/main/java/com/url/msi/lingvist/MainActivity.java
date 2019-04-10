@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
         db = mg.getDatabase("Lingvist.db");
-
+        words = new ArrayList<Word>();
 
 
 
@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
             String letter = cursor.getString(0);
             int cp = cursor.getInt(1);
             Word word = new Word(id, letter, cp);
-            //words.add(word);
-            Log.i("word",letter);//调试用
-            Log.i("cp", String.valueOf(cp));
+            words.add(word);
+            /*Log.i("word",letter);//调试用
+            Log.i("cp", String.valueOf(cp));*/
         }
 
     }
