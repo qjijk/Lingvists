@@ -2,10 +2,12 @@ package com.url.msi.lingvist;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import static java.lang.Math.floor;
 import static java.lang.Math.random;
 /*不用管，还没用*/
 
@@ -86,11 +89,7 @@ public class World extends AppCompatActivity {
             wordArrayList.add(w);
 
         }
-
     }
-
-
-
     // URL url = new URL(http://dict-co.iciba.com/api/dictionary.php?w=go&key=6810AFA1CA6CAA1DC7C1CFA32F41DD4A);
     //金山API获取xml
 
@@ -108,9 +107,6 @@ public class World extends AppCompatActivity {
         }
     }
 
-
-
-
     public void JS(final String key) {
         new Thread(new Runnable() {
             String d1 = null;//句子
@@ -127,6 +123,17 @@ public class World extends AppCompatActivity {
                     //每个词只获取第一个例句
                     for (int i = 0; i < e2.size() && i < 1; i++){
                         d1 = e2.get(i).select("orig").text();
+                        //d1 = d1.replace(key,"______");
+                        int dd = d1.indexOf(key);
+                        int ff = key.length();
+                        //Log.i("dd", String.valueOf(dd));
+                        int a1 = getTextViewSelectionAxisTopY(sentText, dd);//上
+                        float a2 = getTextViewSelectionAxisLeftX(sentText,dd);//左
+                        int a3 = getTextViewSelectionBottomY(sentText,dd);//下
+                        float a4 = getTextViewSelectionAxisRightX(sentText,dd+ff);//右
+                        String qq = "上"+a1+"左"+a2+"下"+a3+"右"+a4;
+                        Log.i("cc",qq);
+
                         d2 = e2.get(i).select("trans").text();
                         Log.i("E",d1);
                         Log.i("C",d2);
@@ -151,8 +158,6 @@ public class World extends AppCompatActivity {
                             senttraText.setText(d3);//更新单词意思
                         }
                     });
-
-
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -163,5 +168,54 @@ public class World extends AppCompatActivity {
         }).start();
 
     }
+
+    private int getTextViewSelectionBottomY(TextView tv,int index) {//字符底部y坐标
+        Layout layout = tv.getLayout();
+        Rect bound = new Rect();
+        int line = layout.getLineForOffset(index);
+        layout.getLineBounds(line, bound);
+        int yAxisBottom = bound.bottom;//字符底部y坐标
+        int yAxisTop = bound.top;//字符顶部y坐标
+        float xAxisLeft = layout.getPrimaryHorizontal(index);//字符左边x坐标
+        float xAxisRight = layout.getSecondaryHorizontal(index);//字符右边x坐标
+        return yAxisBottom;
+    }
+    private float getTextViewSelectionAxisLeftX(TextView tv,int index) {//字符左边x坐标
+        Layout layout = tv.getLayout();
+        Rect bound = new Rect();
+        int line = layout.getLineForOffset(index);
+        layout.getLineBounds(line, bound);
+        int yAxisBottom = bound.bottom;//字符底部y坐标
+        int yAxisTop = bound.top;//字符顶部y坐标
+        float xAxisLeft = layout.getPrimaryHorizontal(index);//字符左边x坐标
+        float xAxisRight = layout.getSecondaryHorizontal(index);//字符右边x坐标
+        return xAxisLeft;
+    }
+
+    private float getTextViewSelectionAxisRightX(TextView tv,int index) {//字符一右边x坐标
+        Layout layout = tv.getLayout();
+        Rect bound = new Rect();
+        int line = layout.getLineForOffset(index);
+        layout.getLineBounds(line, bound);
+        int yAxisBottom = bound.bottom;//字符底部y坐标
+        int yAxisTop = bound.top;//字符顶部y坐标
+        float xAxisLeft = layout.getPrimaryHorizontal(index);//字符左边x坐标
+        float xAxisRight = layout.getSecondaryHorizontal(index);//字符右边x坐标
+        return xAxisRight;
+    }
+
+    private int getTextViewSelectionAxisTopY(TextView tv,int index) {//字符顶部y坐标
+        Layout layout = tv.getLayout();
+        Rect bound = new Rect();
+        int line = layout.getLineForOffset(index);
+        layout.getLineBounds(line, bound);
+        int yAxisBottom = bound.bottom;//字符底部y坐标
+        int yAxisTop = bound.top;//字符顶部y坐标
+        float xAxisLeft = layout.getPrimaryHorizontal(index);//字符左边x坐标
+        float xAxisRight = layout.getSecondaryHorizontal(index);//字符右边x坐标
+        return yAxisTop;
+    }
+
+
 
 }
