@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.king.view.circleprogressview.CircleProgressView;
-/*看名字就知道是干什么的了*/
+/*首页*/
 
 public class HomeFragment extends Fragment {
 
@@ -43,14 +43,13 @@ public class HomeFragment extends Fragment {
         cpv.setShowTick(false);
 
         cpv.setProgressColor(mShaderColors);
-        cpv.showAnimation(70,1500);
+        cpv.showAnimation(70,1500);//显示进度
         cpv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.cpv:
-                        textView.setText("666666");
-                        startActivity(intent);
+                        startActivity(intent);//开新界面
                 }
             }
         });

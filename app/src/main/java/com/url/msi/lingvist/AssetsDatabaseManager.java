@@ -13,6 +13,13 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+*
+*
+*
+*
+* */
+
 /**
  * This is a Assets Database Manager
  * Use it, you can use a assets database file in you application

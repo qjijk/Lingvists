@@ -14,8 +14,15 @@
         android:orientation="vertical"
         android:background="@color/colorPrimary">
 
+        <LinearLayout
+            android:id="@+id/line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        </LinearLayout>
+
         <!--调用第二种方式，java代码更改后删除-->
-        <include layout="@layout/fragment_world_next"/>
+        <!--<include layout="@layout/fragment_world_next" />-->
 
         <TextView
             android:id="@+id/wordTranslation"

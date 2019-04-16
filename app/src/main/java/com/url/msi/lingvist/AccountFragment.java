@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 
 public class AccountFragment extends Fragment {
+    /*没用*/
 
 
     public AccountFragment() {
