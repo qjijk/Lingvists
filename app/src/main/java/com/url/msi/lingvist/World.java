@@ -130,8 +130,8 @@ public class World extends AppCompatActivity {
         }
     }
     /*
-    *
-    *
+    *key 是从数据库获取的单词
+    *然后本函数在服务器获取翻译以及例句
     * */
 
     public void JS(final String key) {
