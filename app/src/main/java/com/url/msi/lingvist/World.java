@@ -32,7 +32,7 @@ import static java.lang.Math.random;
 
 public class World extends AppCompatActivity {
 
-    ArrayList<Word> wordArrayList;
+    ArrayList<Sent> sentsArrayList;
     String key, sent, tra, senttra;
     TextView sentText, traText, senttraText, leandText;
     EditText inputText;
@@ -51,146 +51,56 @@ public class World extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_world);
+        sentsArrayList = MainActivity.getSentsa();
 
-        wordArrayList = new ArrayList<Word>();
 
-        AssetsDatabaseManager.initManager(getApplication());
 
-        mg = AssetsDatabaseManager.getManager();
-        //通过管理对象获取数据库
-        db = mg.getDatabase("Lingvist.db");
 
-        Changestyle1();
-        setWordArrayList();
         senttraText = findViewById(R.id.wordTranslation);
         sentText = findViewById(R.id.sentence);
         traText = findViewById(R.id.sentenceTranslation);
         leandText = findViewById(R.id.learnedNum);
         button = findViewById(R.id.submit);
 
+        changeWord();
+
         leandText.setText("0");//设置下面的进度
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeWord();//点击按钮后执行换单词
                 cont++;
                 String cc = String.valueOf(cont);
                 leandText.setText(cc);
-                //当点击之后进度+1
-                //Toast.makeText(World.this,"测试",Toast.LENGTH_LONG).show();
+                changeWord();
+
             }
         });
-
-        changeWord();
     }
-/*
-* 从数据库获取单词
-* */
-    private void setWordArrayList() {
-        Cursor cursor = db.rawQuery("select * from s123", null);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(2);//获取SQLite中的id列
-            String letter = cursor.getString(0);//单词
-            int cp = cursor.getInt(1);//词频
-            Word w = new Word(id, letter, cp);
-            wordArrayList.add(w);
-
-        }
-    }
-
-    private void Changestyle1()//转换风格
+   /* private void Changestyle1()//转换风格
     {
         View view = getLayoutInflater().inflate(R.layout.fragment_world_next,null);
         LinearLayout layout = findViewById(R.id.line1);
         layout.addView(view);
-    }
-    private void Changestyle2()//转换风格
-    {
-        View view = getLayoutInflater().inflate(R.layout.fragment_world_first,null);
-        LinearLayout layout = findViewById(R.id.line1);
-        layout.addView(view);
-    }
+    }*/
 
-    // URL url = new URL(http://dict-co.iciba.com/api/dictionary.php?w=go&key=6810AFA1CA6CAA1DC7C1CFA32F41DD4A);
-    //金山API获取xml
-/*
-* 开局就调用用来设置所显示的单词
-* */
     private void changeWord()
     {
-        int size = wordArrayList.size();
-        int position = (int) Math.round(random() * (size - 1));//暂时为随机获取单词，等想到到方法则换成按照词频
-        Word word = wordArrayList.get(position);
-        key = word.getWord();//获取单词
-        int a = word.getCp();//获取词频
-        if (a != 1) {
-            changeWord();//影响性能。需要更换数据存储结构
-        }else {
-            JS(key);
-        }
-    }
-    /*
-    *key 是从数据库获取的单词
-    *然后本函数在服务器获取翻译以及例句
-    * */
 
-    public void JS(final String key) {
-        new Thread(new Runnable() {
-            String d1 = null;//句子
-            String d2 = null;//翻译
-            String d3 = null;//意思
+        int size = sentsArrayList.size();
+        Log.i("size", String.valueOf(size));
+        int position = (int) Math.round(random() * (size - 1));
+        Sent sent = sentsArrayList.get(position);
+        String key = sent.getWord();
+        String sents = sent.getSent();
+        String senttra = sent.getSenttra();
+        String tra = sent.getTra();
+        sentText.setText(sents);
+        traText.setText(tra);
+        senttraText.setText(senttra);
 
-            @Override
-            public void run() {
-                Log.i("w", key);
-                try {
-                    //URL url = new URL("http://dict-co.iciba.com/api/dictionary.php?w=go&key=6810AFA1CA6CAA1DC7C1CFA32F41DD4A");
-                    Document document = Jsoup.connect("http://dict-co.iciba.com/api/dictionary.php?w=" + key + "&key=6810AFA1CA6CAA1DC7C1CFA32F41DD4A").get();//获取xml,key为所查询的单词
-                    Elements elements = document.select("dict");
-                    Elements e2 = elements.select("sent");
-                    //每个词只获取第一个例句
-                    for (int i = 0; i < e2.size() && i < 1; i++) {
-                        d1 = e2.get(i).select("orig").text();
-                        //d1 = d1.replace(key,"______");
-                        int dd = d1.indexOf(key);
-                        int ff = key.length();
-
-                        d2 = e2.get(i).select("trans").text();
-                        Log.i("E", d1);
-                        Log.i("C", d2);
-                    }
-                    Elements e3 = elements.select("pos");//pos为词性
-                    Elements e4 = elements.select("acceptation");//acceptation为意思
-                    for (int i = 0; i < e3.size() && i < e4.size() && i < 2; i++)//最多只给出两个意思
-                    {
-                        if (d3 != null) {
-                            d3 = d3 + "\n" + e3.get(i).select("pos").text() + e4.get(i).select("acceptation").text();//使其分行
-                        } else {
-                            d3 = e3.get(i).select("pos").text() + e4.get(i).select("acceptation").text();//如果只有一个单词则不分行
-                        }
-                    }
-                    //     Log.i("d3",d3);
-                    //更新UI的线程
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            sentText.setText(d1);//更新句子
-                            traText.setText(d2);//更新句子翻译
-                            senttraText.setText(d3);//更新单词意思
-
-                        }
-                    });
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }).start();
 
 
     }
+
 
 }
