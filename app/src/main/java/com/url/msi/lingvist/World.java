@@ -3,11 +3,13 @@ package com.url.msi.lingvist;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,13 +32,18 @@ import static java.lang.Math.floor;
 import static java.lang.Math.random;
 
 
-public class World extends AppCompatActivity {
+public class World extends AppCompatActivity implements ReplaceSpan.OnClickListener{
 
     ArrayList<Sent> sentsArrayList;
     String key, sent, tra, senttra;
     TextView sentText, traText, senttraText, leandText;
     EditText inputText;
     Handler handler = null;
+
+    private SpansManager spansManager;
+
+
+
     int cont = 0;
 
     Button button ;
@@ -53,14 +60,16 @@ public class World extends AppCompatActivity {
         setContentView(R.layout.activity_world);
         sentsArrayList = MainActivity.getSentsa();
 
-
-
-
         senttraText = findViewById(R.id.wordTranslation);
         sentText = findViewById(R.id.sentence);
         traText = findViewById(R.id.sentenceTranslation);
         leandText = findViewById(R.id.learnedNum);
         button = findViewById(R.id.submit);
+
+        inputText = findViewById(R.id.et_input);
+        spansManager = new SpansManager(this,sentText,inputText);
+
+
 
         changeWord();
 
@@ -94,13 +103,32 @@ public class World extends AppCompatActivity {
         String sents = sent.getSent();
         String senttra = sent.getSenttra();
         String tra = sent.getTra();
-        sentText.setText(sents);
+        String qq = "(?i)"+key;
+        String ss = sents.replaceAll(qq, "____");
+
+        Log.i("sent",sents);
+        Log.i("key",key);
+        spansManager.doFillBlank(ss);
+        //sentText.setText(sents);
         traText.setText(tra);
         senttraText.setText(senttra);
 
 
 
     }
+
+    public void OnClick(TextView v, int id, ReplaceSpan span)
+    {
+        spansManager.setData(inputText.getText().toString(), null, spansManager.mOldSpan);
+        spansManager.mOldSpan = id;
+        inputText.setText(TextUtils.isEmpty(span.mText)?"":span.mText);
+        inputText.setSelection(span.mText.length());
+        span.mText = "";
+        RectF rf = spansManager.drawSpanRect(span);
+        spansManager.setEtXY(rf);
+        spansManager.setSpanChecked(id);
+    }
+
 
 
 }

@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             Word word = new Word(id, letter, cp);
             words.add(word);
 
-            if (cp == 1 && j < 200)
+            if (cp == 1 && j < 100)
             {
                 JS(letter, cp, j);
                 j++;
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                     Elements elements = document.select("dict");
                     Elements e2 = elements.select("sent");
                     //每个词只获取第一个例句
-                    for (int i = 0; i < e2.size() && i < 1; i++) {
+                    for (int i = 1; i < e2.size() && i < 2; i++) {
                         d1 = e2.get(i).select("orig").text();
                         //d1 = d1.replace(key,"______");
                         int dd = d1.indexOf(key);
@@ -156,8 +156,10 @@ public class MainActivity extends AppCompatActivity {
                             d3 = e3.get(i).select("pos").text() + e4.get(i).select("acceptation").text();//如果只有一个单词则不分行
                         }
                     }
+
                     Sent sentss = new Sent(id, key, cp, d1, d2, d3);
                     sents.add(sentss);
+
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
