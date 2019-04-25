@@ -1,5 +1,6 @@
 package com.url.msi.lingvist;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
@@ -35,25 +36,17 @@ import static java.lang.Math.random;
 public class World extends AppCompatActivity implements ReplaceSpan.OnClickListener{
 
     ArrayList<Sent> sentsArrayList;
-    String key, sent, tra, senttra;
+
     TextView sentText, traText, senttraText, leandText;
     EditText inputText;
-    Handler handler = null;
+
     String a = null;
 
     private SpansManager spansManager;
 
-
-
     int cont = 0;
 
     Button button ;
-
-    SQLiteDatabase db;
-    AssetsDatabaseManager mg;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +83,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         int position = (int) Math.round(random() * (size - 1));
         Sent sent = sentsArrayList.get(position);
         String key = sent.getWord();
+        int cc = key.length() * 12;
+        ReplaceSpan.textWidth = cc + 9;
+        Log.i("cc", String.valueOf(ReplaceSpan.textWidth));
+
         String sents = sent.getSent();
         String senttra = sent.getSenttra();
         String tra = sent.getTra();
@@ -108,10 +105,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
     private void butt()
     {
         button.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
-                String b = "["+a+"]";
-                Log.i("b",b);
+                inputText.setHint(null);
 
                 Log.i("keykey",inputText.getText().toString());
                 if (inputText.getText().toString().equals(a))
@@ -122,7 +119,9 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
                     inputText.setText(null);
                     a = changeWord();
                 }else {
-                    inputText.setText(a);
+                    inputText.setText(null);
+                    inputText.setHintTextColor(R.color.red);
+                    inputText.setHint(a);
                 }
 
 
@@ -142,10 +141,6 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         spansManager.setSpanChecked(id);
     }
 
-    private String getMyAns()
-    {
-        spansManager.setLastCheckedSpanText(inputText.getText().toString());
-        return spansManager.getMyAnswer().toString();
-    }
+
 
 }

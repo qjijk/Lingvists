@@ -21,7 +21,7 @@ public class ReplaceSpan extends ReplacementSpan {
     private final Paint mPaint;
 
     public Object mObject;//回调中的任意对象
-    private int textWidth = 80;//单词的宽度
+    public static int textWidth = 80;//单词的宽度
 
     public OnClickListener mOnClick;
     public int id = 0;//回调中的对应Span的ID
@@ -38,6 +38,9 @@ public class ReplaceSpan extends ReplacementSpan {
         mPaint.setColor(context.getResources().getColor(res));
     }
 
+    public void setTextWidth(int textWidth) {
+        this.textWidth = textWidth;
+    }
 
     @Override
     public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
