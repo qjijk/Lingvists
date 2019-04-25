@@ -39,6 +39,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
     TextView sentText, traText, senttraText, leandText;
     EditText inputText;
     Handler handler = null;
+    String a = null;
 
     private SpansManager spansManager;
 
@@ -69,21 +70,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         inputText = findViewById(R.id.et_input);
         spansManager = new SpansManager(this,sentText,inputText);
 
-
-
-        changeWord();
-
         leandText.setText("0");//设置下面的进度
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cont++;
-                String cc = String.valueOf(cont);
-                leandText.setText(cc);
-                changeWord();
+        a = changeWord();
+        butt();
 
-            }
-        });
     }
    /* private void Changestyle1()//转换风格
     {
@@ -92,7 +82,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         layout.addView(view);
     }*/
 
-    private void changeWord()
+    private String changeWord()
     {
 
         int size = sentsArrayList.size();
@@ -105,16 +95,39 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         String tra = sent.getTra();
         String qq = "(?i)"+key;
         String ss = sents.replaceAll(qq, "____");
-
         Log.i("sent",sents);
         Log.i("key",key);
         spansManager.doFillBlank(ss);
-        //sentText.setText(sents);
+
         traText.setText(tra);
         senttraText.setText(senttra);
+        return key;
+
+    }
+
+    private void butt()
+    {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String b = "["+a+"]";
+                Log.i("b",b);
+
+                Log.i("keykey",inputText.getText().toString());
+                if (inputText.getText().toString().equals(a))
+                {
+                    cont++;
+                    String cc = String.valueOf(cont);
+                    leandText.setText(cc);
+                    inputText.setText(null);
+                    a = changeWord();
+                }else {
+                    inputText.setText(a);
+                }
 
 
-
+            }
+        });
     }
 
     public void OnClick(TextView v, int id, ReplaceSpan span)
@@ -129,6 +142,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         spansManager.setSpanChecked(id);
     }
 
-
+    private String getMyAns()
+    {
+        spansManager.setLastCheckedSpanText(inputText.getText().toString());
+        return spansManager.getMyAnswer().toString();
+    }
 
 }
