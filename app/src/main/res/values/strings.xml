@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">lingvist</string>
+    <string name="app_name">一句</string>
     <string name="title_home">开始</string>
     <string name="title_dashboard">进度</string>
     <string name="title_notifications">我的信息</string>
