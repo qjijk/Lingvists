@@ -77,27 +77,36 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
     private String changeWord()
     {
-
+        String key = null;
         int size = sentsArrayList.size();
         Log.i("size", String.valueOf(size));
         int position = (int) Math.round(random() * (size - 1));
         Sent sent = sentsArrayList.get(position);
-        String key = sent.getWord();
-        int cc = key.length() * 12;
-        ReplaceSpan.textWidth = cc + 9;
-        Log.i("cc", String.valueOf(ReplaceSpan.textWidth));
+        if(sent.getN1() == 1)
+        {
 
-        String sents = sent.getSent();
-        String senttra = sent.getSenttra();
-        String tra = sent.getTra();
-        String qq = "(?i)"+key;
-        String ss = sents.replaceAll(qq, "____");
-        Log.i("sent",sents);
-        Log.i("key",key);
-        spansManager.doFillBlank(ss);
+        }
+        else
+        {
+            key = sent.getWord();
+            int cc = key.length() * 12;
+            ReplaceSpan.textWidth = cc + 9;
+            Log.i("cc", String.valueOf(ReplaceSpan.textWidth));
 
-        traText.setText(tra);
-        senttraText.setText(senttra);
+            String sents = sent.getSent();
+            String senttra = sent.getSenttra();
+            String tra = sent.getTra();
+            String qq = "(?i)"+key;
+            String ss = sents.replaceAll(qq, "____");
+            Log.i("sent",sents);
+            Log.i("key",key);
+            spansManager.doFillBlank(ss);
+
+            traText.setText(tra);
+            senttraText.setText(senttra);
+            sent.setN1(1);
+
+        }
         return key;
 
     }

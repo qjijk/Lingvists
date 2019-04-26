@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 j++;
             }
 
+
             /*Log.i("word",letter);//调试用
             Log.i("cp", String.valueOf(cp));*/
         }
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    Sent sentss = new Sent(id, key, cp, d1, d2, d3);
+                    Sent sentss = new Sent(id, key, cp, d1, d2, d3,0);
                     sents.add(sentss);
 
 
