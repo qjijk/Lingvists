@@ -2,7 +2,7 @@
     <string name="app_name">一句</string>
     <string name="title_home">开始</string>
     <string name="title_dashboard">进度</string>
-    <string name="title_notifications">我的信息</string>
+    <string name="title_notifications">设置</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

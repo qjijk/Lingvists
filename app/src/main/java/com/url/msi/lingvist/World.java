@@ -16,8 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.brioal.selectabletextview.OnWordClickListener;
+import com.brioal.selectabletextview.SelectableTextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -39,6 +43,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
     TextView sentText, traText, senttraText, leandText;
     EditText inputText;
+    ProgressBar progressBar;
+    SelectableTextView sentTexts;
+    SQLiteDatabase db;
+    AssetsDatabaseManager mg;
 
     String a = null;
 
@@ -46,26 +54,23 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
     int cont = 0;
 
-    Button button ;
+    Button button, button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_world);
+
         sentsArrayList = MainActivity.getSentsa();
 
-        senttraText = findViewById(R.id.wordTranslation);
-        sentText = findViewById(R.id.sentence);
-        traText = findViewById(R.id.sentenceTranslation);
-        leandText = findViewById(R.id.learnedNum);
-        button = findViewById(R.id.submit);
+        // 初始化，只需要调用一次
+        AssetsDatabaseManager.initManager(getApplication());
+        // 获取管理对象，因为数据库需要通过管理对象才能够获取
+        mg = AssetsDatabaseManager.getManager();
+        // 通过管理对象获取数据库
+        db = mg.getDatabase("Lingvist.db");
 
-        inputText = findViewById(R.id.et_input);
-        spansManager = new SpansManager(this,sentText,inputText);
-
-        leandText.setText("0");//设置下面的进度
         a = changeWord();
-        butt();
+
 
     }
    /* private void Changestyle1()//转换风格
@@ -77,25 +82,31 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
     private String changeWord()
     {
+
         String key = null;
         int size = sentsArrayList.size();
         Log.i("size", String.valueOf(size));
-        int position = (int) Math.round(random() * (size - 1));
+        final int position = (int) Math.round(random() * (size - 1));
+        Log.i("int", String.valueOf(position));
         Sent sent = sentsArrayList.get(position);
-        if(sent.getN1() == 1)
+        String sents = sent.getSent();
+        String senttra = sent.getSenttra();
+        String tra = sent.getTra();
+        final String wo = sent.getWord();
+        if(sent.getN1() == 1 || sent.getN1() == 2)
         {
-
-        }
-        else
-        {
+            setContentView(R.layout.activity_world);
+            sentText = findViewById(R.id.sentence);
+            init();
+            button = findViewById(R.id.submit1);
+            inputText = findViewById(R.id.et_input);
+            spansManager = new SpansManager(this,sentText,inputText);
             key = sent.getWord();
             int cc = key.length() * 12;
             ReplaceSpan.textWidth = cc + 9;
             Log.i("cc", String.valueOf(ReplaceSpan.textWidth));
 
-            String sents = sent.getSent();
-            String senttra = sent.getSenttra();
-            String tra = sent.getTra();
+
             String qq = "(?i)"+key;
             String ss = sents.replaceAll(qq, "____");
             Log.i("sent",sents);
@@ -104,14 +115,69 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
             traText.setText(tra);
             senttraText.setText(senttra);
+            leandText.setText(String.valueOf(cont));
             sent.setN1(1);
+            progressBar.setProgress(cont);
+            butt1();
+
+        }
+        else if (sent.getN1() == 0)
+        {
+            setContentView(R.layout.activivy_select);
+            init();
+            sentTexts = findViewById(R.id.sentenceSelect);
+            button2 = findViewById(R.id.submit2);
+            traText.setText(tra);
+            senttraText.setText(senttra);
+            sentTexts.setText(sents);
+            leandText.setText(String.valueOf(cont));
+            progressBar.setProgress(cont);
+            Log.i("wo", wo);
+           // Log.i("a", a);
+
+            sentTexts.setOnWordClickListener(new OnWordClickListener() {
+                @Override
+                protected void onNoDoubleClick(String s) {
+                    Log.i("lis", s);
+
+                    if(s.equals(wo))
+                    {
+                        Toast.makeText(getApplicationContext(),wo,Toast.LENGTH_LONG);
+                        cont++;
+                        String cc = String.valueOf(cont);
+                        leandText.setText(cc);
+                        a = changeWord();
+                    }
+                    else
+                    {
+                        Toast toast = Toast.makeText(getApplicationContext(),wo,Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+                }
+            });
+            butt2();
+        }
+        else
+        {
 
         }
         return key;
 
     }
 
-    private void butt()
+    private void init()
+    {
+        senttraText = findViewById(R.id.wordTranslation);
+        traText = findViewById(R.id.sentenceTranslation);
+        leandText = findViewById(R.id.learnedNum);
+        progressBar = findViewById(R.id.progress_bar_healthy);
+
+
+
+    }
+
+    private void butt1()
     {
         button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
@@ -137,6 +203,18 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             }
         });
     }
+
+    public void butt2()
+    {
+        button2.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
+                cont++;
+            }
+        });
+    }
+
 
     public void OnClick(TextView v, int id, ReplaceSpan span)
     {

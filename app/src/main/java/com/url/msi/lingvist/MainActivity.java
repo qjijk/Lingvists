@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
         db = mg.getDatabase("Lingvist.db");
+        /*String worded = "create table worded(C1 VARCHAR, C2 INTEGER primary key autoincrement , C3 INTEGER)";
+        db.execSQL(worded);*/
         words = new ArrayList<Word>();
         sents = new ArrayList<Sent>();
 
