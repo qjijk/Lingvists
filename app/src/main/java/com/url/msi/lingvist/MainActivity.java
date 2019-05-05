@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
         db = mg.getDatabase("Lingvist.db");
-        /*String worded = "create table worded(C1 VARCHAR, C2 INTEGER primary key autoincrement , C3 INTEGER)";
+        /*String worded = "create table worded(C1 VARCHAR, C2 INTEGER primary key autoincrement, C3 INTEGER, C4 VARCHER)";
         db.execSQL(worded);*/
         words = new ArrayList<Word>();
         sents = new ArrayList<Sent>();
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     private void setWordDemande()
     {
         int j = 0;
-        Cursor cursor = db.rawQuery("select * from s123", null);
+        Cursor cursor = db.rawQuery("select * from s123 order by random()", null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(2);//获取SQLite中的id列
             String letter = cursor.getString(0);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             Word word = new Word(id, letter, cp);
             words.add(word);
 
-            if (cp == 1 && j < 100)
+            if (cp == 1 && j < 34)
             {
                 JS(letter, cp, j);
                 j++;

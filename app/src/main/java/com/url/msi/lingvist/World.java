@@ -1,6 +1,7 @@
 package com.url.msi.lingvist;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
@@ -85,13 +86,13 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
         String key = null;
         int size = sentsArrayList.size();
-        Log.i("size", String.valueOf(size));
+        //Log.i("size", String.valueOf(size));
         final int position = (int) Math.round(random() * (size - 1));
         Log.i("int", String.valueOf(position));
         Sent sent = sentsArrayList.get(position);
         String sents = sent.getSent();
         String senttra = sent.getSenttra();
-        String tra = sent.getTra();
+        final String tra = sent.getTra();
         final String wo = sent.getWord();
         if(sent.getN1() == 1 || sent.getN1() == 2)
         {
@@ -116,7 +117,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             traText.setText(tra);
             senttraText.setText(senttra);
             leandText.setText(String.valueOf(cont));
-            sent.setN1(1);
+            sent.setN1(sent.getN1()+1);
             progressBar.setProgress(cont);
             butt1();
 
@@ -133,6 +134,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             leandText.setText(String.valueOf(cont));
             progressBar.setProgress(cont);
             Log.i("wo", wo);
+            sent.setN1(sent.getN1()+1);
            // Log.i("a", a);
 
             sentTexts.setOnWordClickListener(new OnWordClickListener() {
@@ -140,8 +142,13 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
                 protected void onNoDoubleClick(String s) {
                     Log.i("lis", s);
 
-                    if(s.equals(wo))
+                    if(s.equalsIgnoreCase(wo))
                     {
+                        ContentValues cValue = new ContentValues();
+                        cValue.put("C1", wo);
+                        cValue.put("C3", 1);
+                        cValue.put("C4", tra);
+                        db.insert("worded", null, cValue);
                         Toast.makeText(getApplicationContext(),wo,Toast.LENGTH_LONG);
                         cont++;
                         String cc = String.valueOf(cont);
@@ -158,9 +165,13 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             });
             butt2();
         }
-        else
+        else if(sent.getN1() == 3)
         {
-
+            ContentValues cValue = new ContentValues();
+            cValue.put("C1", wo);
+            cValue.put("C3", 1);
+            cValue.put("C4", tra);
+            db.insert("worded", null, cValue);
         }
         return key;
 
