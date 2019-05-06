@@ -61,10 +61,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sentsArrayList = MainActivity.getSentsa();
+        sentsArrayList = SQLite.getSentsa();
 
         // 初始化，只需要调用一次
-        AssetsDatabaseManager.initManager(getApplication());
+        /*AssetsDatabaseManager.initManager(getApplication());*/
         // 获取管理对象，因为数据库需要通过管理对象才能够获取
         mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
@@ -91,6 +91,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         Log.i("int", String.valueOf(position));
         Sent sent = sentsArrayList.get(position);
         String sents = sent.getSent();
+        int id = sent.getId();
         String senttra = sent.getSenttra();
         final String tra = sent.getTra();
         final String wo = sent.getWord();
@@ -170,8 +171,16 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             ContentValues cValue = new ContentValues();
             cValue.put("C1", wo);
             cValue.put("C3", 1);
-            cValue.put("C4", tra);
+            cValue.put("C4", senttra);
             db.insert("worded", null, cValue);
+            String del = "delete from s123 where C2 = " + id;
+            db.execSQL(del);
+        }
+        if (cont == 100)
+        {
+            SQLite sqL = new SQLite();
+            sqL.setWordDemande();
+            sentsArrayList = SQLite.getSentsa();
         }
         return key;
 
