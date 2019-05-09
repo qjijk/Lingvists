@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">一句</string>
     <string name="title_home">开始</string>
-    <string name="title_dashboard">进度</string>
+    <string name="title_dashboard">已背单词表</string>
     <string name="title_notifications">设置</string>
 
     <!-- TODO: Remove or change this placeholder text -->
