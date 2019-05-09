@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         //
         //
         SQLite sqLite = new SQLite();
+        sqLite.oldWord();
         sqLite.setWordDemande();
 
     }

@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
-        textView = view.findViewById(R.id.t1);
+
         final Intent intent = new Intent(getActivity().getApplicationContext(),World.class);
 
 

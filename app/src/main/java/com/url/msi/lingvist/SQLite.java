@@ -4,6 +4,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -12,12 +16,18 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
 public class SQLite {
+
+    public static int sum, lea;
 
     SQLiteDatabase db;
     AssetsDatabaseManager mg;
-    ArrayList<Word> words;
-    static ArrayList<Sent> sents;
+    ArrayList<Word> words, wordd;
+    static ArrayList<Sent> sents, sentd;
 
     public SQLite()
     {
@@ -28,13 +38,31 @@ public class SQLite {
         db = mg.getDatabase("Lingvist.db");
 
         words = new ArrayList<Word>();
+        wordd = new ArrayList<Word>();
+        sentd = new ArrayList<Sent>();
         sents = new ArrayList<Sent>();
     }
 
-    public  void setWordDemande()
+    public void oldWord()
+    {
+        Cursor cursor = db.rawQuery("select * from worded order by random()",null);
+        lea = cursor.getCount();
+        while (cursor.moveToNext())
+        {
+            String letter = cursor.getString(0);
+            int id = cursor.getInt(1);
+            String tra = cursor.getString(3);
+            Sent sent = new Sent(id, letter, 0, "sent", tra, "senttra", 0);
+            sentd.add(sent);
+        }
+
+    }
+
+    public void setWordDemande()
     {
         int j = 0;
         Cursor cursor = db.rawQuery("select * from s123 order by random()", null);
+        sum = cursor.getCount();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(2);//获取SQLite中的id列
             String letter = cursor.getString(0);
@@ -54,11 +82,55 @@ public class SQLite {
         }
 
     }
+    public static int getSum()
+    {
+        return sum;
+    }
+    public static int getLea()
+    {
+        return lea;
+    }
+
 
     public static ArrayList<Sent> getSentsa()
     {
         return sents;
     }
+
+    public static ArrayList<Sent> getSentd() {return sentd;}
+
+  /*  public void JS(final String key, final int cp, final int id)
+    {
+        String url = "http://120.77.83.151:8080/filterss/WordJson?w=wolf";
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final Request request = new Request.Builder().url(url).get().build();
+        final Call call = okHttpClient.newCall(request);
+        String re = null;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Document document = Jsoup.connect("http://120.77.83.151:8080/filterss/WordJson?w="+key).get();
+                    String elements = document.select("body").text();
+                    Log.i("ssss", String.valueOf(elements));
+                    JSONObject object = JSON.parseObject(elements);
+                    String word = object.getString("word");
+                    Log.i("word",word);
+                    String exa = object.getString("collins");
+                    Log.i("eeeee",exa);
+
+
+
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+    }*/
 
     public void JS(final String key, final int cp, final int id)
     {

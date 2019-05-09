@@ -13,11 +13,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp" />
 
-    <TextView
-        android:id="@+id/t1"
-        android:layout_width="match_parent"
-        android:layout_height="163dp"
-        android:text="TextView" />
 
 
 </FrameLayout>

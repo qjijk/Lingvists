@@ -145,13 +145,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
                     if(s.equalsIgnoreCase(wo))
                     {
-                        ContentValues cValue = new ContentValues();
-                        cValue.put("C1", wo);
-                        cValue.put("C3", 1);
-                        cValue.put("C4", tra);
-                        db.insert("worded", null, cValue);
+
                         Toast.makeText(getApplicationContext(),wo,Toast.LENGTH_LONG);
                         cont++;
+                        saveDb(wo, cont, tra);
                         String cc = String.valueOf(cont);
                         leandText.setText(cc);
                         a = changeWord();
@@ -166,13 +163,8 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             });
             butt2();
         }
-        else if(sent.getN1() == 3)
+        else if(sent.getN1() == 5)
         {
-            ContentValues cValue = new ContentValues();
-            cValue.put("C1", wo);
-            cValue.put("C3", 1);
-            cValue.put("C4", senttra);
-            db.insert("worded", null, cValue);
             String del = "delete from s123 where C2 = " + id;
             db.execSQL(del);
         }
@@ -184,6 +176,15 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         }
         return key;
 
+    }
+
+    private void saveDb(String wo, int c, String tra)
+    {
+        ContentValues cValue = new ContentValues();
+        cValue.put("C1", wo);
+        cValue.put("C3", 1);
+        cValue.put("C4", tra);
+        db.insert("worded", null, cValue);
     }
 
     private void init()
