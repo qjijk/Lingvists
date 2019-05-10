@@ -54,12 +54,14 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
     private SpansManager spansManager;
 
     int cont = 0;
+    int c = 0;
 
     Button button, button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         sentsArrayList = SQLite.getSentsa();
 
@@ -69,10 +71,24 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
         db = mg.getDatabase("Lingvist.db");
+        cont = findAll();
 
         a = changeWord();
 
 
+    }
+    private int findAll()
+    {
+        int cc = 0;
+        Cursor cursor = db.query("counts",null,null,null,null,null,null);
+        if (cursor.moveToFirst())
+        {
+            cursor.move(0);
+            cc = cursor.getInt(1);
+        }
+
+
+        return cc;
     }
    /* private void Changestyle1()//转换风格
     {
@@ -92,7 +108,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         Sent sent = sentsArrayList.get(position);
         String sents = sent.getSent();
         int id = sent.getId();
-        String senttra = sent.getSenttra();
+        final String senttra = sent.getSenttra();
         final String tra = sent.getTra();
         final String wo = sent.getWord();
         if(sent.getN1() == 1 || sent.getN1() == 2)
@@ -120,6 +136,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             leandText.setText(String.valueOf(cont));
             sent.setN1(sent.getN1()+1);
             progressBar.setProgress(cont);
+            updateDb(sent.getN1(),key);
             butt1();
 
         }
@@ -145,10 +162,10 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
                     if(s.equalsIgnoreCase(wo))
                     {
-
                         Toast.makeText(getApplicationContext(),wo,Toast.LENGTH_LONG);
                         cont++;
-                        saveDb(wo, cont, tra);
+                        saveCount(cont);
+                        saveDb(wo, senttra);
                         String cc = String.valueOf(cont);
                         leandText.setText(cc);
                         a = changeWord();
@@ -158,7 +175,6 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
                         Toast toast = Toast.makeText(getApplicationContext(),wo,Toast.LENGTH_LONG);
                         toast.show();
                     }
-
                 }
             });
             butt2();
@@ -177,14 +193,29 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         return key;
 
     }
+    private void updateDb(int n1, String word)
+    {
+        String sql = "update worded set C3 = "+(n1-1)+" where C1 = '"+ word+"'";
+        db.execSQL(sql);
 
-    private void saveDb(String wo, int c, String tra)
+    }
+
+    private void saveCount(int conts)
+    {
+        String sql = "update counts set C2 = "+conts+" where C1 = 0";
+        db.execSQL(sql);
+
+
+    }
+
+    private void saveDb(String wo, String tra)
     {
         ContentValues cValue = new ContentValues();
         cValue.put("C1", wo);
-        cValue.put("C3", 1);
         cValue.put("C4", tra);
-        db.insert("worded", null, cValue);
+        db.replace("worded", null, cValue);
+        c++;
+        Log.d("c", String.valueOf(c));
     }
 
     private void init()
@@ -210,6 +241,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
                 if (inputText.getText().toString().equals(a))
                 {
                     cont++;
+                    saveCount(cont);
                     String cc = String.valueOf(cont);
                     leandText.setText(cc);
                     inputText.setText(null);
@@ -219,12 +251,9 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
                     inputText.setHintTextColor(R.color.red);
                     inputText.setHint(a);
                 }
-
-
             }
         });
     }
-
     public void butt2()
     {
         button2.setOnClickListener(new View.OnClickListener() {
@@ -235,8 +264,6 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             }
         });
     }
-
-
     public void OnClick(TextView v, int id, ReplaceSpan span)
     {
         spansManager.setData(inputText.getText().toString(), null, spansManager.mOldSpan);
@@ -248,7 +275,4 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         spansManager.setEtXY(rf);
         spansManager.setSpanChecked(id);
     }
-
-
-
 }

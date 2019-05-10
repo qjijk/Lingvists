@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.king.view.circleprogressview.CircleProgressView;
@@ -18,6 +19,7 @@ import com.king.view.circleprogressview.CircleProgressView;
 
 public class NotificationFragment extends Fragment {
     TextView learndView,countView;
+    EditText editText;
     SQLiteDatabase db;
     AssetsDatabaseManager mg;
     private int sum, lea;
@@ -35,6 +37,8 @@ public class NotificationFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
+        editText = view.findViewById(R.id.newWord);
+        editText.setHint("30");
 
         countView = view.findViewById(R.id.sum);
         learndView = view.findViewById(R.id.wordNum);

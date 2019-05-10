@@ -46,7 +46,6 @@ public class AccountFragment extends Fragment {
             Sent word = sentsArrayList.get(i);
             wordList.add(word);
             Log.i("abcd", String.valueOf(word));
-
         }
     }
 

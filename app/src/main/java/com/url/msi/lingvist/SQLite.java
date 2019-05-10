@@ -43,6 +43,7 @@ public class SQLite {
         sents = new ArrayList<Sent>();
     }
 
+
     public void oldWord()
     {
         Cursor cursor = db.rawQuery("select * from worded order by random()",null);
@@ -52,11 +53,13 @@ public class SQLite {
             String letter = cursor.getString(0);
             int id = cursor.getInt(1);
             String tra = cursor.getString(3);
-            Sent sent = new Sent(id, letter, 0, "sent", tra, "senttra", 0);
+            int n1 = cursor.getInt(2);
+            Sent sent = new Sent(id, letter, 0, "sent", tra, "senttra", n1);
             sentd.add(sent);
         }
 
     }
+
 
     public void setWordDemande()
     {
@@ -99,38 +102,6 @@ public class SQLite {
 
     public static ArrayList<Sent> getSentd() {return sentd;}
 
-  /*  public void JS(final String key, final int cp, final int id)
-    {
-        String url = "http://120.77.83.151:8080/filterss/WordJson?w=wolf";
-        OkHttpClient okHttpClient = new OkHttpClient();
-        final Request request = new Request.Builder().url(url).get().build();
-        final Call call = okHttpClient.newCall(request);
-        String re = null;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Document document = Jsoup.connect("http://120.77.83.151:8080/filterss/WordJson?w="+key).get();
-                    String elements = document.select("body").text();
-                    Log.i("ssss", String.valueOf(elements));
-                    JSONObject object = JSON.parseObject(elements);
-                    String word = object.getString("word");
-                    Log.i("word",word);
-                    String exa = object.getString("collins");
-                    Log.i("eeeee",exa);
-
-
-
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-
-    }*/
 
     public void JS(final String key, final int cp, final int id)
     {
@@ -147,7 +118,7 @@ public class SQLite {
                     Elements elements = document.select("dict");
                     Elements e2 = elements.select("sent");
                     //每个词只获取第一个例句
-                    for (int i = 1; i < e2.size() && i < 2; i++) {
+                    for (int i = 0; i < e2.size() && i < 1; i++) {
                         d1 = e2.get(i).select("orig").text();
                         //d1 = d1.replace(key,"______");
                         int dd = d1.indexOf(key);
@@ -167,9 +138,17 @@ public class SQLite {
                             d3 = e3.get(i).select("pos").text() + e4.get(i).select("acceptation").text();//如果只有一个单词则不分行
                         }
                     }
+                    if (!d2.equals(""))
+                    {
+                        Sent sentss = new Sent(id, key, cp, d1, d2, d3,0);
+                        sents.add(sentss);
+                    }
+                    else
+                    {
 
-                    Sent sentss = new Sent(id, key, cp, d1, d2, d3,0);
-                    sents.add(sentss);
+                    }
+
+
 
 
                 } catch (MalformedURLException e) {
