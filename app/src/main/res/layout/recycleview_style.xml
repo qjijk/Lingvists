@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="1dp"
-    android:paddingBottom="1dp"
+    android:background="@drawable/shape_radius"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     android:orientation="horizontal">
 
     <TextView
@@ -14,7 +14,6 @@
         android:textSize="18sp"
         android:gravity="center"
         android:text="sentence"
-        android:background="@color/colorBackground"
         android:layout_width="120dp"
         android:layout_height="match_parent" />
 
@@ -26,7 +25,6 @@
         android:gravity="center_vertical"
         android:text="n. [语][计] 句子，命题；宣判，判决\nvt. 判决，宣判"
         android:padding="10dp"
-        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

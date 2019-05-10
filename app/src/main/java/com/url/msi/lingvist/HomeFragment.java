@@ -21,7 +21,6 @@ public class HomeFragment extends Fragment {
     TextView textView;
     SQLiteDatabase db;
     private CircleProgressView cpv;
-    private int[] mShaderColors = new int[]{0xFF4FEAAC,0xFFA8DD51,0x00000000,0xFFA8DD51,0xFF4FEAAC};
 
 
 
@@ -42,8 +41,12 @@ public class HomeFragment extends Fragment {
         cpv = view.findViewById(R.id.cpv);
         cpv.setShowTick(false);
 
-        cpv.setProgressColor(mShaderColors);
-        cpv.showAnimation(70,1500);//显示进度
+        cpv.setProgressColorResource(R.color.colorPrimary);
+
+
+        cpv.setLabelTextSize(48);
+        cpv.setLabelTextColorResource(R.color.colorPrimary);
+        cpv.showAnimation(34,1500);//显示进度
         cpv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,9 +59,6 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
-
-
 
 
 }
