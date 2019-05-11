@@ -187,7 +187,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         if (cont == 100)
         {
             SQLite sqL = new SQLite();
-            sqL.setWordDemande();
+            sqL.setWordDemande(30);
             sentsArrayList = SQLite.getSentsa();
         }
         return key;

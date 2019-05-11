@@ -61,7 +61,7 @@ public class SQLite {
     }
 
 
-    public void setWordDemande()
+    public void setWordDemande(int h)
     {
         int j = 0;
         Cursor cursor = db.rawQuery("select * from s123 order by random()", null);
@@ -73,7 +73,7 @@ public class SQLite {
             Word word = new Word(id, letter, cp);
             words.add(word);
 
-            if (cp == 1 && j < 34)
+            if (cp == 1 && j < h)
             {
                 JS(letter, cp, j);
                 j++;

@@ -21,6 +21,7 @@ public class HomeFragment extends Fragment {
     TextView textView;
     SQLiteDatabase db;
     AssetsDatabaseManager mg;
+    int cc = 0;
 
 
     private CircleProgressView cpv;
@@ -38,11 +39,14 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
 
+
         final Intent intent = new Intent(getActivity().getApplicationContext(),World.class);
         mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
         db = mg.getDatabase("Lingvist.db");
-        int cc = findAll();
+        cc = findAll();
+
+
 
 
 
@@ -55,13 +59,15 @@ public class HomeFragment extends Fragment {
 
         cpv.setLabelTextSize(48);
         cpv.setLabelTextColorResource(R.color.colorPrimary);
-        cpv.showAnimation(cc,1500);//显示进度
+        cpv.showAnimation(cc,100);//显示进度
         cpv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.cpv:
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);//开新界面
+
                 }
             }
         });
@@ -78,10 +84,15 @@ public class HomeFragment extends Fragment {
             cursor.move(0);
             cc = cursor.getInt(1);
         }
-
-
         return cc;
     }
+    public void onResume() {
+
+        super.onResume();
+
+        cpv.showAnimation(findAll(),100);
+    }
+
 
 
 }
