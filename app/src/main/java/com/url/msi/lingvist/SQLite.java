@@ -114,7 +114,7 @@ public class SQLite {
                 Log.i("w", key);
                 try {
                     //URL url = new URL("http://dict-co.iciba.com/api/dictionary.php?w=go&key=6810AFA1CA6CAA1DC7C1CFA32F41DD4A");
-                    Document document = Jsoup.connect("http://dict-co.iciba.com/api/dictionary.php?w=" + key + "&key=6810AFA1CA6CAA1DC7C1CFA32F41DD4A").get();//获取xml,key为所查询的单词
+                    Document document = Jsoup.connect("http://120.77.83.151:8080/filterss/WordJson?w=" + key + "&c=b").get();//获取xml,key为所查询的单词
                     Elements elements = document.select("dict");
                     Elements e2 = elements.select("sent");
                     //每个词只获取第一个例句
