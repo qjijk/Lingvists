@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -76,6 +78,8 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         a = changeWord();
 
 
+
+
     }
     private int findAll()
     {
@@ -118,6 +122,9 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             init();
             button = findViewById(R.id.submit1);
             inputText = findViewById(R.id.et_input);
+            inputText.setHorizontallyScrolling(false);
+            inputText.setMaxLines(1);
+            inputText.setOnKeyListener(onKeyListener);
             spansManager = new SpansManager(this,sentText,inputText);
             key = sent.getWord();
             int cc = key.length() * 12;
@@ -139,7 +146,11 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             updateDb(sent.getN1(),key);
             butt1();
 
+
         }
+
+
+
         else if (sent.getN1() == 0)
         {
             setContentView(R.layout.activivy_select);
@@ -187,12 +198,29 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
         if (cont == 100)
         {
             SQLite sqL = new SQLite();
-            sqL.setWordDemande(30);
+
+            sqL.setWordDemande(NotificationFragment.newws);
             sentsArrayList = SQLite.getSentsa();
         }
         return key;
 
     }
+
+    View.OnKeyListener onKeyListener = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View view, int i, KeyEvent keyEvent) {
+            Log.d("i", String.valueOf(i));
+            if (i == KeyEvent.KEYCODE_ENTER)
+            {
+                Log.d("成功","成功");
+                return true;
+            }
+
+            return false;
+        }
+    };
+
+
     private void updateDb(int n1, String word)
     {
         String sql = "update worded set C3 = "+(n1-1)+" where C1 = '"+ word+"'";
@@ -227,6 +255,7 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
 
 
 
+
     }
 
     private void butt1()
@@ -236,7 +265,6 @@ public class World extends AppCompatActivity implements ReplaceSpan.OnClickListe
             @Override
             public void onClick(View view) {
                 inputText.setHint(null);
-
                 Log.i("keykey",inputText.getText().toString());
                 if (inputText.getText().toString().equals(a))
                 {

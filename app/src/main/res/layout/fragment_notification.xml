@@ -30,6 +30,8 @@
                 android:layout_height="48dp"
                 android:layout_marginRight="20dp"
                 android:layoutDirection="rtl"
+                android:singleLine="true"
+                android:inputType="number"
                 android:background="@android:drawable/edit_text"/>
         </LinearLayout>
 

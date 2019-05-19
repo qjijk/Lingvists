@@ -138,14 +138,14 @@ public class SQLite {
                             d3 = e3.get(i).select("pos").text() + e4.get(i).select("acceptation").text();//如果只有一个单词则不分行
                         }
                     }
-                    if (!d2.equals(""))
+                    if (d2.equals(""))
                     {
-                        Sent sentss = new Sent(id, key, cp, d1, d2, d3,0);
-                        sents.add(sentss);
+
                     }
                     else
                     {
-
+                        Sent sentss = new Sent(id, key, cp, d1, d2, d3,0);
+                        sents.add(sentss);
                     }
 
 
